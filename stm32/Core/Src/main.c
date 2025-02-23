@@ -79,13 +79,6 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
         HAL_UART_Receive_IT(&huart2, &temp, 1);
     }
 }
-
-//void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
-//    if(huart->Instance == USART2){
-//        HAL_UART_Transmit(&huart2, &temp, 1, 50);
-//        HAL_UART_Receive_IT(&huart2, &temp, 1);
-//    }
-//}
 /* USER CODE END 0 */
 
 /**
@@ -127,9 +120,8 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
  	  HAL_TIM_Base_Start_IT(&htim2);
-  	  HAL_ADC_Start(&hadc1); 					//Khởi động quá trình chuyển đổi ADC
+  	  HAL_ADC_Start(&hadc1);
   	  HAL_UART_Receive_IT(&huart2, &temp, 1);
-//	  HAL_ADC_PollForConversion(&hadc1, 1000); // �?ợi cho quá trình chuyển đổi hoàn tất
 
    char str[50];
 
@@ -160,7 +152,7 @@ int main(void)
 
 
        if(timer_flag == 1){
-           setTimer(3000); // Reset timer
+           setTimer(3000);
            if(communication_state == SEND_ADC){
 
                is_SendADC_flag = 1;
@@ -170,9 +162,6 @@ int main(void)
 
 
    }
-
-
-
   /* USER CODE END 3 */
 }
 

@@ -16,7 +16,7 @@
 uint8_t buffer[MAX_BUFFER_SIZE];
 
 uint8_t index_buffer = 0;
-uint8_t buffer_flag = 0; //flag báo new data
+uint8_t buffer_flag = 0;
 
 uint8_t temp = 0;
 uint8_t command_flag, command_data;
@@ -107,27 +107,6 @@ void command_parser_fsm(void){
 	}
 }
 
-
-//void uart_communication_fsm(void){
-//	switch(communication_state){
-//	case INIT_:
-//		is_SendADC_flag = is_ReadADC_flag = 0;
-//		if(command_flag == 1) {
-//			is_ReadADC_flag = 1;
-//			communication_state = SEND_ADC;
-//		}
-//		break;
-//	case SEND_ADC:
-//		is_SendADC_flag = 1;
-//		if(command_data == 1) communication_state = INIT_;
-////		is_SendADC_flag = 0;
-//
-//		break;
-//	default:
-//		break;
-//	}
-//}
-
 void uart_communication_fsm(void){
     switch(communication_state){
     case READ_ADC:
@@ -135,13 +114,13 @@ void uart_communication_fsm(void){
         if(command_flag == 1) {
             is_ReadADC_flag = 1;
             communication_state = SEND_ADC;
-            setTimer(3000); // Bắt đầu đếm timeout 3 giây
+            setTimer(3000);
         }
         break;
     case SEND_ADC:
         if(command_data == 1) {
             communication_state = READ_ADC;
-            command_flag = command_data = 0; // Reset cờ lệnh
+            command_flag = command_data = 0;
         }
         break;
     default:

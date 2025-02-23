@@ -39,13 +39,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  17 .debug_line   0001141c  00000000  00000000  0003078f  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    0008d595  00000000  00000000  00041bab  2**0
+ 18 .debug_str    0008d5e4  00000000  00000000  00041bab  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000043  00000000  00000000  000cf140  2**0
+ 19 .comment      00000043  00000000  00000000  000cf18f  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00003f20  00000000  00000000  000cf184  2**2
+ 20 .debug_frame  00003f20  00000000  00000000  000cf1d4  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 0000006e  00000000  00000000  000d30a4  2**0
+ 21 .debug_line_str 0000006e  00000000  00000000  000d30f4  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -413,10 +413,6 @@ void command_parser_fsm(void){
  8000350:	40010800 	.word	0x40010800
 
 08000354 <uart_communication_fsm>:
-//	default:
-//		break;
-//	}
-//}
 
 void uart_communication_fsm(void){
  8000354:	b580      	push	{r7, lr}
@@ -429,7 +425,7 @@ void uart_communication_fsm(void){
  8000360:	2b01      	cmp	r3, #1
  8000362:	d016      	beq.n	8000392 <uart_communication_fsm+0x3e>
             communication_state = READ_ADC;
-            command_flag = command_data = 0; // Reset cờ lệnh
+            command_flag = command_data = 0;
         }
         break;
     default:
@@ -456,7 +452,7 @@ void uart_communication_fsm(void){
  8000382:	4b0e      	ldr	r3, [pc, #56]	@ (80003bc <uart_communication_fsm+0x68>)
  8000384:	2201      	movs	r2, #1
  8000386:	701a      	strb	r2, [r3, #0]
-            setTimer(3000); // Bắt đầu đếm timeout 3 giây
+            setTimer(3000);
  8000388:	f640 30b8 	movw	r0, #3000	@ 0xbb8
  800038c:	f000 fa14 	bl	80007b8 <setTimer>
         break;
@@ -470,7 +466,7 @@ void uart_communication_fsm(void){
  800039a:	4b08      	ldr	r3, [pc, #32]	@ (80003bc <uart_communication_fsm+0x68>)
  800039c:	2200      	movs	r2, #0
  800039e:	701a      	strb	r2, [r3, #0]
-            command_flag = command_data = 0; // Reset cờ lệnh
+            command_flag = command_data = 0;
  80003a0:	4b0a      	ldr	r3, [pc, #40]	@ (80003cc <uart_communication_fsm+0x78>)
  80003a2:	2200      	movs	r2, #0
  80003a4:	701a      	strb	r2, [r3, #0]
@@ -610,7 +606,7 @@ int main(void)
  	  HAL_TIM_Base_Start_IT(&htim2);
  8000466:	4827      	ldr	r0, [pc, #156]	@ (8000504 <main+0xbc>)
  8000468:	f002 f85a 	bl	8002520 <HAL_TIM_Base_Start_IT>
-  	  HAL_ADC_Start(&hadc1); 					//Khởi động quá trình chuyển đổi ADC
+  	  HAL_ADC_Start(&hadc1);
  800046c:	4826      	ldr	r0, [pc, #152]	@ (8000508 <main+0xc0>)
  800046e:	f000 fcab 	bl	8000dc8 <HAL_ADC_Start>
   	  HAL_UART_Receive_IT(&huart2, &temp, 1);
@@ -618,7 +614,6 @@ int main(void)
  8000474:	4925      	ldr	r1, [pc, #148]	@ (800050c <main+0xc4>)
  8000476:	4826      	ldr	r0, [pc, #152]	@ (8000510 <main+0xc8>)
  8000478:	f002 fcb9 	bl	8002dee <HAL_UART_Receive_IT>
-//	  HAL_ADC_PollForConversion(&hadc1, 1000); // �?ợi cho quá trình chuyển đổi hoàn tất
 
    char str[50];
 
@@ -695,7 +690,7 @@ int main(void)
  80004e4:	681b      	ldr	r3, [r3, #0]
  80004e6:	2b01      	cmp	r3, #1
  80004e8:	d1d0      	bne.n	800048c <main+0x44>
-           setTimer(3000); // Reset timer
+           setTimer(3000);
  80004ea:	f640 30b8 	movw	r0, #3000	@ 0xbb8
  80004ee:	f000 f963 	bl	80007b8 <setTimer>
            if(communication_state == SEND_ADC){
